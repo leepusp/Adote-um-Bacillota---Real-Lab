@@ -1,0 +1,27 @@
+name: bacillota-aula
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - pandas
+  - numpy
+  - matplotlib
+  - biopython
+  - mafft
+  - trimal
+  - r-base
+  - r-ape
+  - r-phangorn
+  - r-caper
+  - r-optparse
+  - r-ggplot2
+  - r-dplyr
+  - r-forcats
+  - r-rcolorbrewer
+  - r-ggnewscale
+  - r-scales
+  - bioconductor-ggtree
