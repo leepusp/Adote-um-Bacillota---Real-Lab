@@ -87,7 +87,5 @@ Por limitações do git, a tabela das anotações e dos ortólogos necessárias 
 - A árvore GTDB contém inicialmente 189.801 pontas, podadas para 229 na versão para a aula. Usar a subárvore não equivale a inferir uma árvore nova.
 - O destaque de Bacillales depende da taxonomia recuperada e pode ser incompleto para genomas não cobertos; evite interpretar a falta de destaque como evidência taxonômica negativa.
 - O notebook 01 **não reproduz a extração Bakta**, pois ela requer os arquivos `.ffn` originais ausentes do repositório. O FASTA das 229 sequências já é fornecido.
-- O script R e os notebooks foram testados com dados sintéticos (R 4.3.3, ape 5.7.1, caper 1.0.4, ggtree 4.3.1, ggplot2 4.0.3, ggnewscale 0.5.2, optparse 1.8.2; Python 3.12, Biopython 1.88, pandas 3.0, ipywidgets 8), não com os dados reais nem com o ambiente criado pelo `environment.yml`. Rode os comandos acima com os dados reais e teste `mamba env create` numa máquina limpa antes da aula.
 - R usa as mesmas 229 assemblies, mas compara topologias que podem diferir entre os marcadores; D depende da topologia, comprimento de ramos e definição de caracteres.
 - A reconstrução ancestral depende do enraizamento, da amostragem de outgroups e do modelo. O modelo Mk trata ganho e perda de membrana externa como eventos comparáveis, o que é uma simplificação forte.
-- `fabZ` está presente em praticamente todas as bactérias, monodermes inclusive, e não discrimina envelope; vale tratá-lo como contraexemplo na discussão (pergunta 4 do notebook 03).
