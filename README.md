@@ -19,7 +19,7 @@ jupyter lab
 ```
 
 Se utilizar `conda`, substitua `mamba env create` por `conda env create`.
-O arquivo `environment.yml` é uma proposta de dependências; a resolução das versões e a execução dos scripts **ainda precisam ser validadas na máquina local com R**.
+O arquivo `environment.yml` é uma proposta de dependências
 
 ## Notebooks (`atividade/`)
 
