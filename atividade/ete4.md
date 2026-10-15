@@ -25,3 +25,5 @@ outgroup = tips.query(f'''phylum != "Bacillota" and species not in {exclude}''')
 t.set_outgroup(t.common_ancestor(outgroup))
 
 t.write("16S_final_itol.nwk", parser=1)
+
+t.explore()
