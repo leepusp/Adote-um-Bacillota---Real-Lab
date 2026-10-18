@@ -6,5 +6,3 @@
 ## Recolhendo o Blast
 
 ## Árvore
-
-## Galperin
