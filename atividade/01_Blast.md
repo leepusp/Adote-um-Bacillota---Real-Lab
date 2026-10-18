@@ -25,16 +25,17 @@ Uma vez no site, nós temos uma sequência de DNA, então nós vamos usar o blas
 
 1. Aqui temos uma janela para colocar a nossa sequência. Da maneira que preferirem, vocês podem fazer ctrl-c ctrl-v da sequência dentro da caixa ou clicar em "upload file" ("carregar arquivo")
 2. Nós temos uma sequência de RNA 16S, para os próximos passos da disciplina, será útil sabermos em qual genoma ela está, portanto, vamos escolher a base refseq_reference_genomes
-3. Vamos selecionar "blastn" dentre as opções de algorítmos que temos na seção "Program selection"
-4. Vamos tentar pegar algumas sequências para termos o suficiente para gerar uma árvore, vá em "+Algorithms Parameters" e troque o valor de "max target sequences" de 100 para 500
-5. Aperte BLAST
+3. Por exigência da plataforma, precisamos selecionar um organismo. Aqui colocaremos o nome do filo, Bacillota
+4. Vamos selecionar "blastn" dentre as opções de algorítmos que temos na seção "Program selection"
+5. Vamos tentar pegar algumas sequências para termos o suficiente para gerar uma árvore, vá em "+Algorithms Parameters" e troque o valor de "max target sequences" de 100 para 500
+6. Aperte BLAST
 
 
 Uma vez com os resultados podemos observar algumas coisas na página, como os valores de:
 
-Coverage (cobertura): O quanto da minha sequência que é contemplado pelo que eu tenho daquele item na minha base de dados
-E-value: qual a probabilidade desse resultado se repetir
-Per. ident (Porcentagem de identidade): O quão parecida a minha sequência é em relação a esse correspondente na base de dados
+Coverage (cobertura): O quanto da minha sequência que é contemplado pelo que eu tenho daquele item na minha base de dados  
+E-value: qual a probabilidade desse resultado se repetir  
+Per. ident (Porcentagem de identidade): O quão parecida a minha sequência é em relação a esse correspondente na base de dados  
 
 Vamos ver as nossas sequências?
 
@@ -44,5 +45,6 @@ Isso irá gerar um arquivo de extensão ".txt" para download
 
 Se vocês abrirem, irão reparar que na verdade ele está em formato fasta, o que faz ele poder ser observado no programa **Aliview**
 
+Baixe também a tabela "Descriptions table (CSV)" e a tabela "Hits table"
 
-Vamos passar para o próximo passo, mas NÃO FECHE a saída do BLAST
+Vamos passar para o próximo passo, mas NÃO FECHE a saída do BLAST (Vamos voltar pra ela em passos posteriores!)

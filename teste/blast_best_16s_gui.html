@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLAST Best HSP — FASTA Filter</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#182536;background:#f7f9fc;font-size:16px}
+*{box-sizing:border-box}body{margin:0;padding:32px 16px}main{max-width:850px;margin:auto}
+h1{font-size:1.8rem;margin:0 0 9px}p{line-height:1.5}h2{font-size:1.05rem;margin:28px 0 12px}
+small,.muted{color:#556474}.panel{background:white;border:1px solid #d5dee9;border-radius:12px;padding:22px;margin-top:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:680px){.grid{grid-template-columns:1fr}}
+label{font-weight:600;display:block;margin-bottom:8px}input[type=file],select{width:100%;border:1px solid #b7c8dc;border-radius:8px;padding:9px;background:#fff}
+button,.linkbtn{background:#2459aa;border:0;color:white;border-radius:8px;padding:12px 16px;cursor:pointer;font-size:.95rem;font-weight:600;display:inline-block;text-decoration:none;margin:8px 8px 0 0}
+button:disabled{background:#92a6c5;cursor:not-allowed}.linkbtn.secondary{background:#edf3fc;color:#1b4f9d;border:1px solid #9dbce8}
+code{background:#edf1f6;border-radius:4px;padding:2px 5px;font-size:.88rem}
+#message{white-space:pre-wrap;margin:18px 0 0;padding:12px;border-left:4px solid #7b9ac1;background:#f2f6fb;border-radius:6px}
+#message.error{border-color:#c43134;background:#fff0f0}#message.success{border-color:#32866d;background:#e9f7f2}
+.hidden{display:none}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.stat{padding:14px;background:#f2f6fb;border-radius:10px}.stat strong{font-size:1.35rem;display:block}.stat span{font-size:.8rem;color:#586e84}
+@media(max-width:600px){.stats{grid-template-columns:1fr 1fr}}
+pre{background:#f3f6fa;overflow:auto;padding:12px;font-size:.75rem;border:1px solid #dce6f1;border-radius:8px;white-space:pre}
+summary{cursor:pointer;font-weight:600}footer{margin:28px 0;color:#536277;font-size:.85rem}
+</style>
+</head>
+<body><main>
+<h1>BLAST: one best 16S hit per accession</h1>
+<p>Reduce thousands of aligned BLAST regions to the <strong>highest-bit-score alignment for each genomic accession</strong>. Choose the two files downloaded from NCBI BLAST. No terminal, installation, or internet required.</p>
+<div class="panel">
+<div class="grid">
+<div><label for="csv">1 · BLAST Hit Table (CSV)</label><input id="csv" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain"><p class="muted"><small>BLAST results → Download → Hit Table (CSV). Requires the standard 12 BLAST fields, including subject accession, subject coordinates and bit score.</small></p></div>
+<div><label for="fasta">2 · FASTA (aligned sequences)</label><input id="fasta" type="file" accept=".fasta,.fa,.fna,.fas,.txt,text/plain"><p class="muted"><small>BLAST results → Download → FASTA (aligned sequences). Headers should begin with an accession and coordinates, e.g. <code>NZ_CP040336.1:486692-487421</code>.</small></p></div>
+</div>
+<label for="naming">Output sequence names</label>
+<select id="naming"><option value="species">Species + unique accession/coordinates (for phylogeny)</option><option value="accession">Unique accession/coordinates only</option><option value="original">Original FASTA names, unchanged</option></select>
+<button id="go">Keep best hit per accession</button>
+<div id="message" aria-live="polite">Select your two files, then run the filter.</div>
+</div>
+<div class="panel hidden" id="results">
+<h2>Results</h2>
+<div class="stats"><div class="stat"><strong id="fastaCount">—</strong><span>Input FASTA entries</span></div><div class="stat"><strong id="hitCount">—</strong><span>Distinct accessions in table</span></div><div class="stat"><strong id="keptCount">—</strong><span>Best hits extracted</span></div></div>
+<a id="fastaDownload" class="linkbtn" download="best_16s_hits.fasta">Download filtered FASTA</a>
+<a id="reportDownload" class="linkbtn secondary" download="best_16s_hits_report.tsv">Download matching report (TSV)</a>
+<p class="muted" id="explain"></p>
+<details><summary>Show retained sequence names (first 20)</summary><pre id="preview"></pre></details>
+<details id="missingDetails" class="hidden"><summary>Show unmatched best hits</summary><pre id="missing"></pre></details>
+</div>
+<footer>Runs entirely in your browser: files stay on your computer. BLAST "aligned sequences" are local pairwise matches, not necessarily a ready-to-use multiple alignment; align the retained sequences with MAFFT before phylogenetic inference. Always check the number of retained sequences and any unmatched accessions.</footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+let urls = [];
+function showMessage(message,type='') { $('message').textContent=message; $('message').className=type; }
+function parseDelimited(text) {
+  const first = text.split(/\r?\n/).find(s=>s.trim()&&!s.startsWith('#'))||'';
+  const delimiter = first.includes('\t') ? '\t' : ',';
+  const rows=[];let row=[],cell='',quoted=false;
+  text=text.replace(/^\uFEFF/,'');
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(quoted){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++;}else if(ch==='"'){quoted=false;}else cell+=ch;}
+    else if(ch==='"'){quoted=true;}
+    else if(ch===delimiter){row.push(cell);cell='';}
+    else if(ch==='\n'||ch==='\r'){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(cell);if(row.some(c=>c.trim()))rows.push(row);row=[];cell='';}
+    else cell+=ch;
+  }
+  row.push(cell);if(row.some(c=>c.trim()))rows.push(row);
+  return rows;
+}
+function cleanAccession(s) {
+  s=String(s||'').trim();
+  const parts=s.split('|').filter(Boolean);
+  const recognized=parts.find(p=>/\d/.test(p)&&/^[A-Za-z0-9_]+(?:\.[0-9]+)?$/.test(p));
+  return (recognized||s).toUpperCase();
+}
+function parseFasta(text) {
+  const records=[];let record=null;
+  for(const line of text.replace(/^\uFEFF/,'').split(/\r?\n/)){
+    if(line.startsWith('>')){record={header:line.slice(1).trim(),sequence:''};records.push(record);}
+    else if(record&&line.trim())record.sequence+=line.replace(/\s/g,'');
+    else if(line.trim()&&!record)throw Error('FASTA does not start with a >header.');
+  }
+  return records;
+}
+function getFastaLocation(header) {
+  const token=header.split(/\s+/)[0];
+  const match=token.match(/^(.+?):(?:c)?(\d+)-(\d+)$/i);
+  if(!match)return null;
+  const acc=cleanAccession(match[1]); const a=Number(match[2]),b=Number(match[3]);
+  return {accession:acc,start:Math.min(a,b),end:Math.max(a,b)};
+}
+function locKey(x){return x.accession+'\u0001'+x.start+'\u0001'+x.end;}
+function parseHitTable(text) {
+  const rows=parseDelimited(text), hits=[];
+  for(let i=0;i<rows.length;i++){
+    const r=rows[i];if(r.length<12)continue;
+    const start=Number(r[8]),end=Number(r[9]),score=Number(r[11]),alen=Number(r[3]);
+    if(!Number.isFinite(start)||!Number.isFinite(end)||!Number.isFinite(score)||!start||!end)continue;
+    const accession=cleanAccession(r[1]);if(!accession)continue;
+    hits.push({query:r[0],accession,start:Math.min(start,end),end:Math.max(start,end),strand:start<=end?'+':'-',score,alignLength:alen,identity:Number(r[2]),row:i+1});
+  }
+  if(!hits.length)throw Error('No valid hits detected. The table must use the standard 12-column BLAST Hit Table layout.');
+  const best=new Map();
+  for(const h of hits){const old=best.get(h.accession);if(!old||h.score>old.score||(h.score===old.score&&h.alignLength>old.alignLength))best.set(h.accession,h);}
+  return {hits,best};
+}
+function extractSpecies(header) {
+  const description=header.replace(/^\S+\s*/, '');
+  let m=description.match(/^(Candidatus\s+[A-Z][\w.-]+\s+[a-z][\w.-]+)/);
+  if(!m)m=description.match(/^([A-Z][\w.-]+\s+(?:[a-z][\w.-]+|sp\.))/);
+  return m ? m[1].replace(/[.\s]+/g,'_').replace(/_$/,'') : '';
+}
+function safeName(s) {return s.replace(/[^A-Za-z0-9._-]/g,'_').replace(/_+/g,'_');}
+function tsvValue(v){return String(v??'').replace(/[\t\r\n]/g,' ').trim();}
+function downloadBlob(id,body,mime){const blob=new Blob([body],{type:mime});const url=URL.createObjectURL(blob);urls.push(url);$(id).href=url;}
+async function run(){
+  $('results').classList.add('hidden');
+  for(const url of urls)URL.revokeObjectURL(url);urls=[];
+  const hitFile=$('csv').files[0],fastaFile=$('fasta').files[0];
+  if(!hitFile||!fastaFile){showMessage('Please select both files first.','error');return;}
+  $('go').disabled=true;showMessage('Reading and comparing the two files…');
+  try{
+    const [tableText,fastaText]=await Promise.all([hitFile.text(),fastaFile.text()]);
+    const {hits,best}=parseHitTable(tableText),records=parseFasta(fastaText);
+    if(!records.length)throw Error('The FASTA file contains no sequences.');
+    const indexed=new Map(), duplicates=new Map();
+    for(const record of records){const loc=getFastaLocation(record.header);if(!loc)continue;const key=locKey(loc);if(indexed.has(key))duplicates.set(key,(duplicates.get(key)||1)+1);else indexed.set(key,record);}
+    const kept=[],missing=[],lines=['accession\tstart\tend\tstrand\tbit_score\tpercent_identity\talignment_length\toriginal_fasta_header\tnew_fasta_header\tstatus'];
+    const mode=$('naming').value;
+    for(const hit of best.values()){
+      const rec=indexed.get(locKey(hit));let label='';
+      if(rec){
+        const identifier=safeName(hit.accession+'_'+hit.start+'-'+hit.end);
+        const species=extractSpecies(rec.header);
+        label=mode==='original'?rec.header:mode==='accession'?identifier:species?species+'_'+identifier:identifier;
+        kept.push({record:rec,label,hit});
+      }else missing.push(hit);
+      lines.push([hit.accession,hit.start,hit.end,hit.strand,hit.score,hit.identity,hit.alignLength,rec?rec.header:'',label,rec?'matched':'UNMATCHED'].map(tsvValue).join('\t'));
+    }
+    if(!kept.length)throw Error('No coordinates matched. Check that both downloads come from the SAME BLAST search and that your FASTA headers begin with accession:start-end.');
+    const fastaOut=kept.map(x=>'>'+x.label+'\n'+(x.record.sequence.match(/.{1,80}/g)||[]).join('\n')+'\n').join('');
+    downloadBlob('fastaDownload',fastaOut,'text/plain;charset=utf-8');
+    downloadBlob('reportDownload',lines.join('\n')+'\n','text/tab-separated-values;charset=utf-8');
+    $('fastaCount').textContent=records.length.toLocaleString();$('hitCount').textContent=best.size.toLocaleString();$('keptCount').textContent=kept.length.toLocaleString();
+    $('preview').textContent=kept.slice(0,20).map(x=>'>'+x.label).join('\n');
+    $('missingDetails').classList.toggle('hidden',missing.length===0);
+    $('missing').textContent=missing.slice(0,60).map(h=>h.accession+':'+h.start+'-'+h.end+' (bit score '+h.score+')').join('\n');
+    $('explain').textContent=`Read ${hits.length.toLocaleString()} table alignments and ${records.length.toLocaleString()} FASTA entries. Kept the highest-bit-score HSP per accession; ${missing.length} best hits were not found by exact accession+coordinates in the FASTA. ${duplicates.size} duplicate FASTA coordinate keys were encountered. Download the TSV report for an audit.`;
+    $('results').classList.remove('hidden');
+    const type=missing.length?'error':'success';
+    showMessage(`${kept.length} best-scoring hits matched. ${missing.length?missing.length+' could not be matched (inspect the TSV report).':'All best-scoring hits matched.'}`,type);
+  }catch(e){showMessage('Unable to complete filtering: '+e.message,'error');}
+  finally{$('go').disabled=false;}
+}
+$('go').addEventListener('click',run);
+</script>
+</main></body>
+</html>
