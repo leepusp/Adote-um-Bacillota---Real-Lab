@@ -169,9 +169,9 @@ Após terminar o IQ-TREE2, localizem **`iqtree/GTR/arvore.treefile`**. Abram ess
 
 No iTOL, localizem os principais clados, selecionem **Branches → Whole clade** e escolham cores para representar características biológicas. Como são muitas sequências, concentrem-se nos grupos e subclados, em vez de pintar individualmente todas as pontas.
 
-# Inicialmente, vamos colorir os ramos de acordo com as busca feitas, seguindo o exemplo da árvore pré montada
+Inicialmente, vamos colorir os ramos de acordo com as busca feitas, seguindo o exemplo da árvore pré montada
 
-Encontrem os clados que contém: Top 100 E.coli / Top 50 Clostridium / Top 500 Bacillus, e o isolado ambiental. Destaquem esses poscionamentos inicialmente.
+Encontrem os clados que contém: Top 100 Blast E.coli / Top 50 Blast Clostridium / Top 500 Blast Bacillus, e o isolado ambiental. Destaquem esses ramos inicialmente.
 
 Agora que vocês encontraram e fizeram uma interpretação inicial, vamos inicialmente exportar essa árvore salva (Pode ser em PDF ou JPEG, para isso vão em export, selecione screen, coloquem um nome para identificação, e exportem a árvore, assim não perderemos mais essa visualização.
 
