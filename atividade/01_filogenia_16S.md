@@ -169,7 +169,13 @@ Após terminar o IQ-TREE2, localizem **`iqtree/GTR/arvore.treefile`**. Abram ess
 
 No iTOL, localizem os principais clados, selecionem **Branches → Whole clade** e escolham cores para representar características biológicas. Como são muitas sequências, concentrem-se nos grupos e subclados, em vez de pintar individualmente todas as pontas.
 
-Como atividade de interpretação, comparem os agrupamentos por bactérias esporulantes e façam a coloração dos ramos passa assinalar bactérias que esporulam e que não esporulam, usem uma cor para cada, grupo.
+# Inicialmente, vamos colorir os ramos de acordo com as busca feitas, seguindo o exemplo da árvore pré montada
+
+Encontrem os clados que contém: Top 100 E.coli / Top 50 Clostridium / Top 500 Bacillus, e o isolado ambiental. Destaquem esses poscionamentos inicialmente.
+
+Agora que vocês encontraram e fizeram uma interpretação inicial, vamos inicialmente exportar essa árvore salva (Pode ser em PDF ou JPEG, para isso vão em export, selecione screen, coloquem um nome para identificação, e exportem a árvore, assim não perderemos mais essa visualização.
+
+Seguindo as comparações, agora quero que comparem e façam a coloração dos ramos por bactérias por bactérias que esporulam e que não esporulam, usem uma cor para cada grupo.
 
 Por fim, vamos colorir as bactérias de outra forma, assinalem bactérias comensais humanas (Staphylococcus, Escherichia coli, e outras bem caracterizadas) e bactérias ambientais, diferenciem por gênero. 
 
