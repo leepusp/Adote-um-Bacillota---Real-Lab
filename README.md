@@ -1,6 +1,8 @@
-# Real Lab - Bacillota — exercício de filogenia e evolução de caracteres
+# Real Lab - Bacillota — exercício de filogenia e evolução de bacteriana
 
 Este repositório contém material de apoio para a atividade a ser conduzida em sala de aula: **"Isolamento, identificação molecular e filogenia comparativa de bactérias ambientais"**, parte do Real Lab Day.
+
+![alt text](Logo.jpg)
 
 ## Equipe
 
@@ -30,13 +32,21 @@ Ferramentas utilizadas
 A linha de análise do isolado passa por um conjunto pequeno de programas, cada um resolvendo uma etapa específica:
 
 Cromatograma (Chromas/Geneious) — leitura dos picos do sequenciamento Sanger, conferência da qualidade das bases e montagem do consenso.
+
 NCBI — bancos de sequências e genomas de referência usados para identificação e busca de parentes.
+
 BLAST (blastn/tblastn) — busca por similaridade, para encontrar as sequências mais próximas do consenso ou localizar genes específicos em um genoma.
+
 MAFFT — alinhamento múltiplo, posicionando as bases homólogas entre todas as sequências.
+
 Geneious / AliView — inspeção e edição manual do alinhamento antes da análise filogenética.
-IQ-TREE2 — inferência da árvore por máxima verossimilhança.
+
+IQ-TREE2 — Algoritmo/programa de inferência da árvore por máxima verossimilhança.
+
 Modelo de substituição (ex. GTR) — descreve as taxas relativas de troca entre nucleotídeos, usado pelo IQ-TREE2 para calcular a árvore mais provável.
+
 Árvore de máxima verossimilhança — a topologia que, sob o modelo escolhido, melhor explica os dados observados.
+
 A árvore de 16S da atividade
 
 ![alt text](image.png)

@@ -169,10 +169,11 @@ Após terminar o IQ-TREE2, localizem **`iqtree/GTR/arvore.treefile`**. Abram ess
 
 No iTOL, localizem os principais clados, selecionem **Branches → Whole clade** e escolham cores para representar características biológicas. Como são muitas sequências, concentrem-se nos grupos e subclados, em vez de pintar individualmente todas as pontas.
 
-Como atividade de interpretação, comparem os agrupamentos por bactérias que esporulam, e façam a coloração dos ramos passa assinalar bactérias que esporulam e que não esporulam, uma cor para cada
-Por fim, vamos colorir as bactérias de outra forma, assinalem bactérias comensais humanas (Staphylococcus, Escherichia coli, e outras bem caracterizadas) e bactérias ambientais. 
+Como atividade de interpretação, comparem os agrupamentos por bactérias esporulantes e façam a coloração dos ramos passa assinalar bactérias que esporulam e que não esporulam, usem uma cor para cada, grupo.
 
-Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de anotação e interpretação dos clados. 
+Por fim, vamos colorir as bactérias de outra forma, assinalem bactérias comensais humanas (Staphylococcus, Escherichia coli, e outras bem caracterizadas) e bactérias ambientais, diferenciem por gênero. 
+
+Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de anotação e interpretação dos clados. Caso vocês não saibam a origem de um grupo específico, organizem-se para pesquisar essas informações na literatura.
 
 ---
 
@@ -268,10 +269,15 @@ Uma vez que tenhamos unido os dados da turma em uma tabela só, vamos fazer o se
 
 # Perguntas guia para a análise
 
-1) Olhando a árvore de vocês em relação à diversidade geral de procariotos (material de apoio com as árvores dos livros): como os grupos próximos do isolado de vocês se posicionam dentro dessa diversidade maior? ##-> isso aqui eles não vão conseguir responder com a árvore de 16S
+1) Após concluir cada etapa, desde a montagem do gene, até a interpretação final das árvores, qual foi a etapa mais desafiadora para vocês ? 
 
-2) Em relação às sequências mais próximas do isolado: seu Bacillus fica perto de quem? Quais espécies/gêneros aparecem no entorno imediato?
-3) Olhando para os grupos de referência que vocês mesmos adicionaram (Clostridium, E. coli e parentes), eles aparecem na árvore de vocês na mesma relação que aparecem no material de apoio (árvore dos Gram-positivos)? Por que o gênero clostridium está separado do clado de Bacillus, embora ambas esporulam e são bactérias ambientais ? qual seria a hipótese de vocês ? 
-4) Depois de pintar por patogenicidade e por hospedeiro provável: esses dois padrões de cor se agrupam dentro dos mesmos subclados da árvore, ou ficam misturados? Um clado filogeneticamente próximo necessariamente significa bactérias com o mesmo estilo de vida (ambiental vs. comensal, patogênica vs. não)? ## isso aqui, você tem os dados, Gustavo? É um set de informações diferente
-5) Será que os genomas que selecionamos são produtores de espóros? Porque?
-   1) Existe algum gene compartilhado pelos produtores?
+2) Olhando a árvore de vocês em relação à diversidade geral de procariotos (material de apoio com as árvores dos livros): como os grupos próximos do isolado de vocês se posicionam dentro dessa diversidade maior ? 
+
+3) Em relação às sequências mais próximas do isolado: seu Bacillus fica perto de quem? Quais espécies/gêneros aparecem no entorno imediato ?
+
+4) Olhando para os grupos de referência que vocês mesmos adicionaram (Clostridium, E. coli e parentes), eles aparecem na árvore de vocês na mesma relação que aparecem no material de apoio (árvore dos Gram-positivos)? Por que o gênero clostridium está separado do clado de Bacillus, embora ambas esporulam e são bactérias ambientais ? qual seria a hipótese de vocês ? 
+
+5) Depois de pintar por bactérias esporulantes e por hospedeiro provável: esses dois padrões de cor se agrupam dentro dos mesmos subclados da árvore, ou ficam misturados? Um clado filogeneticamente próximo necessariamente significa bactérias com o mesmo estilo de vida (ambiental vs. comensal, esporulante vs. não)? 
+
+6) Será que os genomas que selecionamos são produtores de espóros? Porque?
+   A) Existe algum gene compartilhado pelos produtores?
