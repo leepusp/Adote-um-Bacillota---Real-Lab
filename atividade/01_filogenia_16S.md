@@ -175,21 +175,91 @@ Como atividade de interpretação, comparem os agrupamentos por patogenicidade e
 
 ## Passo 8 Agora que vocês aprenderam como montar um árvore inicial, vamos olhar para um exemplo de uma pesquisa já públicada e vamos ver o padrão de algumas das sequências nossas!
 
-1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais,
-2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais
-
-
+1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais, 
+2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais (Galperin_reduced.xlsx)
+   
+   
 ### Encontrando anotações
 
 Infelizmente, não podemos integrar o nosso bacilo ambiental pois não possuímos o genoma dele, aqui cada um de vocês irá escolher uma espécie do resultado do BLAST para tentarmos encontrar os equivalentes desses 112 genes.
 
 #### Precisamos de um genoma
 
-É necessário term
+É necessário termos um genoma para ver se algum dos genomas que nós podemos recuperar através do blast possui esse cog
+Vamos primeiro selecionar o genoma
+
+Da saída do BLAST que conseguimos anteriormente, vamos ver quais sequências podem servir para esse objetivo. Estamos em 4. Vamos dividir um genoma para cada
+
+Os top 4 resultados no BLAST feito para elaborar a aula são:
+
+- Bacillus wiedmannii strain FSL W8-0169 
+- Bacillus proteolyticus strain MCCC 1A00365
+- Bacillus toyonensis strain BCT-7112
+- Bacillus sanguinis strain BML-BC004
+
+Vamos tentar encontrar um genoma para essas espécies e strain!
+
+##### Encontrando um genoma
+
+1. Acesse o site da base de dados do ncbi [Databses](https://www.ncbi.nlm.nih.gov/datasets/genome/)
+2. Digite primeiro o nome da espécie desejada no campo de busca
+3. Filtre pelas palavras chaves após "strain" (exemplo: FSL W8-0169)
+   1. Se não existir o genoma da strain, vamos pegar o genoma da espécie!
+4. Clique no link para o assembly, role a página que você encontrou até a região de "Chromossomes"
+   1. Aqui, se existir apenas um ou dois, copie os identificadores do nucleotídeo, caso existam mais, recomendamos que você aperte o botão de Download e salve a tabela
+
+##### Encontrando o nosso gene
+
+Entremos novamente no BLAST, mas desta vez, iremos selecionar tblastn
+
+Carregue o fasta galperin_cog_queries.faa
+
+Marque "Align with one or more sequences"
+
+No campo que se abriu, cole os identificadores de núcleotídeo (na tabela está como "RefSeq seq accession") anotados anteriormente
+
+Abra os parâmetros extras +Alignment parameters mude o parâmetro de resultados de 50 para 10 e o threshold de 0.05 para 0.005. Estamos sendo mais estritos.
+
+Aqui baixaremos a HitsTable.csv e faremos um processo muito parecido com o que fizemos da última vez!
 
 
-## "" MALU PREENCHER AQUI PASSO A PASSO DAS ATIVIDADES "" ##
+## Usando Google Sheets para filtrar dados
 
+Vamos selecionar os melhores resultados do tblastn usando o Google Sheets!
+
+Precisamos dar nomes às colunas da planilha que baixamos do BLAST/NCBI.
+
+1. Copie a lista de nomes de colunas abaixo:
+
+```
+qaccver,saccver,pident,length,mismatch,gapopen,qstart,qend,sstart,send,evalue,bitscore,positives,qframe,frame
+```
+
+2. Insira uma nova primeira linha na planilha e cole a lista copiada na primeira célula.
+3. Clique no menu Dados e selecione "Dividir texto em colunas"
+4. Certifique-se de que o separador de colunas escolhido foi a vírgula (",")
+5. Copie os dados da coluna A, **linhas 1 até a penúltima**, para a coluna P e mude seu nome para _anterior_
+6. Na segunda linha da coluna Q, coloque a fórmula ```=A1<>P2```
+7. Copie a fórmula em Q2 para todas as outras linhas da coluna Q onde existem valores na linha
+8. Clique no botão **filtrar** () e desative o item FALSO
+9. Copie as linhas filtradas para outra aba e:
+   1.  Aperte ctrl+H, selecione "expressões regulares" e cole `|*.+$`. Aperte enter. Apenas sobrarão os identificadores do COG
+   2.  Vamos aproveitar e substituir o 'COG5820' e o 'COG5821' por 'COG5820+21'
+   3.  Agora vá na tabela reduzida e copie as colunas para conseguir os COGs na ordem certa
+   4.  Cole os valores de COG na coluna B1
+   5.  Na célula B2, digite `=TRANSPOSE(B1:DI1)`
+   6.  Na célula C2, digite `=IF(COUNTIF(A:A;B2)>0;"'+'";"'-'")` e arraste para baixo
+   7.  Cole os resultados da Coluna C em uma nova aba e faça a mesma operação de transposição, só que agora teremos uma linha
+10. Essa linha pode ser colada diretamente na tabela reduzida do Galperin
+
+### Embelezando a tabela
+
+Vamos marcar a tabela!
+
+Uma vez que tenhamos unido os dados da turma em uma tabela só, vamos fazer o seguinte:
+
+1. Vamos remover as aspas, no ctrl+H substitua ' por vazio
+2. Selecione toda a tabela e vá em "Formatar">"Formatação condicional". Na aba que se abre à sua direita, selecione "texto é exatamente" e crie duas regras com as cores de sua escolha para + e para -
 
 # Perguntas guia para a análise
 
@@ -198,6 +268,5 @@ Infelizmente, não podemos integrar o nosso bacilo ambiental pois não possuímo
 2) Em relação às sequências mais próximas do isolado: seu Bacillus fica perto de quem? Quais espécies/gêneros aparecem no entorno imediato?
 3) Olhando para os grupos de referência que vocês mesmos adicionaram (Clostridium, E. coli e parentes), eles aparecem na árvore de vocês na mesma relação que aparecem no material de apoio (árvore dos Gram-positivos)? Tem alguma coisa que ficou diferente do esperado? Existem mais espécie "entre elas" que não foram representadas" ?
 4) Depois de pintar por patogenicidade e por hospedeiro provável: esses dois padrões de cor se agrupam dentro dos mesmos subclados da árvore, ou ficam misturados? Um clado filogeneticamente próximo necessariamente significa bactérias com o mesmo estilo de vida (ambiental vs. comensal, patogênica vs. não)? ## isso aqui, você tem os dados, Gustavo? É um set de informações diferente
-
-
-## MALU, COLOCAR PERGUNTAR SOBRE A ATIVIDADE DE ENDÓSPOROS
+5) Será que os genomas que selecionamos são produtores de espóros? Porque?
+   1) Existe algum gene compartilhado pelos produtores?
