@@ -102,7 +102,34 @@ Infelizmente, não podemos integrar o nosso bacilo ambiental pois não possuímo
 
 #### Precisamos de um genoma
 
-É necessário term
+É necessário termos um genoma para ver se algum dos genomas que nós podemos recuperar através do blast possui esse cog
+Vamos primeiro selecionar o genoma
+
+Da saída do BLAST que conseguimos anteriormente, vamos ver quais sequências podem servir para esse objetivo. Estamos em 4. Vamos dividir um genoma para cada
+
+Os top 4 resultados no BLAST feito para elaborar a aula são:
+
+- Bacillus wiedmannii strain FSL W8-0169 
+- Bacillus proteolyticus strain MCCC 1A00365
+- Bacillus toyonensis strain BCT-7112
+- Bacillus sanguinis strain BML-BC004
+
+Vamos tentar encontrar um genoma para essas espécies e strain!
+
+##### Encontrando um genoma
+
+1. Acesse o site da base de dados do ncbi [Databses](https://www.ncbi.nlm.nih.gov/datasets/genome/)
+2. Digite primeiro o nome da espécie desejada no campo de busca
+3. Filtre pelas palavras chaves após "strain" (exemplo: FSL W8-0169)
+   1. Se não existir o genoma da strain, vamos pegar o genoma da espécie!
+4. Clique no link para o assembly, role a página que você encontrou abaixo até a região de "Chromossomes"
+   1. Aqui, se existir apenas um ou dois, copie o identificador do cromossomo, caso existam mais, recomendamos que você aperte o botão de Download e salve a tabela
+
+##### Encontrando o nosso gene
+
+Entremos novamente no BLAST, mas desta vez, iremos selecionar tblastn
+
+
 
 
 ## "" MALU PREENCHER AQUI PASSO A PASSO DAS ATIVIDADES "" ##
