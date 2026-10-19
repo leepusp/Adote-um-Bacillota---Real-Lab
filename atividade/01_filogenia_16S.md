@@ -266,7 +266,7 @@ Uma vez que tenhamos unido os dados da turma em uma tabela só, vamos fazer o se
 1) Olhando a árvore de vocês em relação à diversidade geral de procariotos (material de apoio com as árvores dos livros): como os grupos próximos do isolado de vocês se posicionam dentro dessa diversidade maior? ##-> isso aqui eles não vão conseguir responder com a árvore de 16S
 
 2) Em relação às sequências mais próximas do isolado: seu Bacillus fica perto de quem? Quais espécies/gêneros aparecem no entorno imediato?
-3) Olhando para os grupos de referência que vocês mesmos adicionaram (Clostridium, E. coli e parentes), eles aparecem na árvore de vocês na mesma relação que aparecem no material de apoio (árvore dos Gram-positivos)? Tem alguma coisa que ficou diferente do esperado? Existem mais espécie "entre elas" que não foram representadas" ?
+3) Olhando para os grupos de referência que vocês mesmos adicionaram (Clostridium, E. coli e parentes), eles aparecem na árvore de vocês na mesma relação que aparecem no material de apoio (árvore dos Gram-positivos)? Por que o gênero clostridium está separado do clado de Bacillus, embora ambas esporulam e são bactérias ambientais ? qual seria a hipótese de vocês ? 
 4) Depois de pintar por patogenicidade e por hospedeiro provável: esses dois padrões de cor se agrupam dentro dos mesmos subclados da árvore, ou ficam misturados? Um clado filogeneticamente próximo necessariamente significa bactérias com o mesmo estilo de vida (ambiental vs. comensal, patogênica vs. não)? ## isso aqui, você tem os dados, Gustavo? É um set de informações diferente
 5) Será que os genomas que selecionamos são produtores de espóros? Porque?
    1) Existe algum gene compartilhado pelos produtores?
