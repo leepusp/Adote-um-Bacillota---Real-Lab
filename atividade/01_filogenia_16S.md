@@ -149,7 +149,7 @@ Neste exemplo, usaremos o modelo evolutivo **GTR** e o alinhamento filtrado pelo
 ```bash
 MODELO=GTR
 mkdir -p "iqtree/$MODELO"
-iqtree2 -s trimal.fasta -st DNA -m "$MODELO" --fast -T AUTO --threads-max 8 -mem 6G -pre "iqtree/$MODELO/arvore"
+iqtree2 -s trimal.fasta -st DNA -m "$MODELO" -B 1000 -T AUTO --threads-max 8 -mem 6G -pre "iqtree/$MODELO/arvore"
 ```
 
 **Entrada:** `trimal.fasta` — FASTA com alinhamento múltiplo de DNA. **Saída principal:** `iqtree/GTR/arvore.treefile` — árvore filogenética em **formato Newick**.
