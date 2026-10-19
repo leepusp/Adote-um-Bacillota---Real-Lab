@@ -4,11 +4,11 @@
 
 Vamos construir uma árvore filogenética de 16S rRNA para posicionar o isolado ambiental em um contexto mais amplo de diversidade bacteriana: *Bacillus* e parentes próximos (via BLAST), além de grupos de comparação, como *Clostridium* e *Escherichia coli*/outras Gram-negativas.
 
-> **Resultado esperado:** uma árvore com aproximadamente 700 sequências (500 do BLAST do isolado + 100 de *Clostridium* + 100 de *E. coli* + o nosso isolado ambiental). O total poderá variar devido a resultados repetidos entre buscas.
+> **Resultado esperado:** uma árvore com aproximadamente 650 sequências (500 do BLAST do isolado + 50 de *Clostridium* + 100 de *E. coli* + o nosso isolado ambiental). O total poderá variar devido a resultados repetidos entre buscas.
 
 ## Passo 1 — Visualização de cromatogramas no Chromas e montagem do gene no GENEIOUS PRIME
 
-Primeiro, abram os arquivos de sequenciamento Sanger (`.ab1`) no **Chromas**. Visualizem os cromatogramas, avaliem a qualidade das bases e copiem uma sequência inicial para uma identificação preliminar por BLASTn.
+Primeiro, abram os arquivos de sequenciamento Sanger (`.ab1`) no **Chromas/Geneious**. Visualizem os cromatogramas, avaliem a qualidade das bases e copiem uma sequência inicial para uma identificação preliminar por BLASTn.
 
 Após encontrar uma sequência de referência de 16S rRNA, utilizem o **Geneious Prime**:
 
@@ -32,13 +32,13 @@ O consenso é a sequência de base para a busca principal no BLASTn.
 
 ## Passo 3 — Adicionar sequências para comparação
 
-Como o BLAST do isolado retorna principalmente organismos próximos, adicionaremos dois grupos de comparação mais distantes. Algumas sequências podem se repetir entre as buscas.
+Como o BLAST do isolado retorna principalmente organismos próximos, adicionaremos dois grupos de comparação mais distantes. Algumas sequências podem se repetir entre as buscas. Para isso, vamos voltar na página do BlastN, e clicar no NIH, para acessar ao banco de dados do NCBI.
 
 **Grupo *Clostridium*:**
 
 1. No NCBI Nucleotide, procurem uma sequência de referência de 16S rRNA de *Clostridium botulinum*.
 2. Executem um novo BLASTn no mesmo banco de 16S de linhagens-tipo.
-3. Baixem os **100 primeiros hits em FASTA**.
+3. Baixem os **50 primeiros hits em FASTA**.
 4. Abram o conjunto principal no **AliView** e utilizem **Sequence → Add Sequences** para importar esse FASTA.
 
 **Grupo *E. coli* e outras Gram-negativas:**
@@ -49,7 +49,7 @@ Como o BLAST do isolado retorna principalmente organismos próximos, adicionarem
 
 **Atenção:** podem aparecer outros gêneros relacionados, como *Shigella* e *Salmonella*. Isso faz parte da diversidade do grupo; não os excluam apenas pelo nome do gênero.
 
-Incluam também o **consenso do isolado ambiental** e salvem o conjunto final como **`database.fasta`**. O conjunto deverá ter aproximadamente 700 sequências; verifiquem eventuais entradas duplicadas.
+Incluam também o **consenso do isolado ambiental** e salvem o conjunto final como **`database.fasta`**. O conjunto deverá ter aproximadamente 651 sequências; verifiquem eventuais entradas duplicadas.
 
 **Entrada:** arquivos FASTA dos três BLASTs e do isolado. **Saída:** `database.fasta` — FASTA com as sequências reunidas.
 
@@ -169,11 +169,16 @@ Após terminar o IQ-TREE2, localizem **`iqtree/GTR/arvore.treefile`**. Abram ess
 
 No iTOL, localizem os principais clados, selecionem **Branches → Whole clade** e escolham cores para representar características biológicas. Como são muitas sequências, concentrem-se nos grupos e subclados, em vez de pintar individualmente todas as pontas.
 
-Como atividade de interpretação, comparem os agrupamentos por patogenicidade e por hospedeiro/ambiente. Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de anotação e interpretação dos clados.
+Como atividade de interpretação, comparem os agrupamentos por bactérias que esporulam, e façam a coloração dos ramos passa assinalar bactérias que esporulam e que não esporulam, uma cor para cada
+Por fim, vamos colorir as bactérias de outra forma, assinalem bactérias comensais humanas (Staphylococcus, Escherichia coli, e outras bem caracterizadas) e bactérias ambientais. 
+
+Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de anotação e interpretação dos clados. 
 
 ---
 
-## Passo 8 Agora que vocês aprenderam como montar um árvore inicial, vamos olhar para um exemplo de uma pesquisa já públicada e vamos ver o padrão de algumas das sequências nossas!
+## Passo 8 - Análise dos genes de esporulação
+
+Agora que vocês aprenderam como montar um árvore inicial, vamos olhar para um exemplo de uma pesquisa já públicada e vamos ver o padrão de algumas das sequências nossas!
 
 1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais, 
 2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais (Galperin_reduced.xlsx)
