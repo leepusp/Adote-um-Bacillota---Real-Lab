@@ -67,10 +67,10 @@ Substituam `user` por `aluno1`, `aluno2`, `aluno3` ou `aluno4`. Depois de conect
 
 ```bash
 conda activate py310
-cd ~/database
+cd ~/adote
 ```
 
-O arquivo `database.fasta`, montado no AliView, deverá estar nessa pasta do Haldane. Se ele estiver somente no computador da LEEP (e não em uma pasta compartilhada), enviem-no a partir do terminal da LEEP com `scp -P 25022 database.fasta user@haldane.icb.usp.br:~/database/`, substituindo `user` pelo login individual.
+O arquivo `database.fasta`, montado no AliView, deverá estar nessa pasta do Haldane. Se ele estiver somente no computador da LEEP (e não em uma pasta compartilhada), enviem-no a partir do terminal da LEEP com `scp -P 25022 database.fasta user@haldane.icb.usp.br:~/adote/`, substituindo `user` pelo login individual.
 
 ### 4.2. Padronizar os identificadores GenBank
 
