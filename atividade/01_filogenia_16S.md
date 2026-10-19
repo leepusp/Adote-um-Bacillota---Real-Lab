@@ -43,7 +43,7 @@ Como o BLAST do isolado retorna principalmente organismos próximos, adicionarem
 
 **Grupo *E. coli* e outras Gram-negativas:**
 
-1. Procurem uma sequência de referência de 16S rRNA de *Escherichia coli*.
+1. Procurem uma sequência de referência de 16S rRNA de *c*.
 2. Repitam a busca no mesmo banco, baixando os **100 primeiros hits em FASTA**.
 3. Adicionem as sequências ao conjunto no AliView pelo mesmo procedimento.
 
@@ -60,7 +60,7 @@ Incluam também o **consenso do isolado ambiental** e salvem o conjunto final co
 No terminal da LEEP, conectem-se usando a conta fornecida para a atividade:
 
 ```bash
-ssh -p 25022 user@haldane.icb.usp.br
+ssh -p 25022 aluno1@haldane.icb.usp.br
 ```
 
 Substituam `user` por `aluno1`, `aluno2`, `aluno3` ou `aluno4`. Depois de conectar:
@@ -100,7 +100,7 @@ awk '
     gsub(/[[:space:]]/, "")
     if (length($0)) print
 }
-' database.fasta > bacillus_clostridium_ecoli.fasta
+'database.fasta > bacillus_clostridium_ecoli.fasta
 ```
 
 **Entrada:** `database.fasta` — FASTA com acesso GenBank seguido da descrição do organismo. **Saída:** `bacillus_clostridium_ecoli.fasta` — FASTA sem gaps e com nomes padronizados.
