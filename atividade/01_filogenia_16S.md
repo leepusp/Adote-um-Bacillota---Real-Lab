@@ -182,7 +182,7 @@ Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de
 Agora que vocês aprenderam como montar um árvore inicial, vamos olhar para um exemplo de uma pesquisa já públicada e vamos ver o padrão de algumas das sequências nossas!
 
 1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais, 
-2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais (Galperin_reduced.xlsx)
+2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais (GalperinS3Reduzida.xlsx)
    
    
 ### Encontrando anotações
@@ -226,7 +226,7 @@ No campo que se abriu, cole os identificadores de núcleotídeo (na tabela está
 
 Abra os parâmetros extras +Alignment parameters mude o parâmetro de resultados de 50 para 10 e o threshold de 0.05 para 0.005. Estamos sendo mais estritos.
 
-Aqui baixaremos a HitsTable.csv e faremos um processo muito parecido com o que fizemos da última vez!
+Aqui baixaremos a HitsTable.csv e faremos um processo simples de filtragem
 
 
 ## Usando Google Sheets para filtrar dados
