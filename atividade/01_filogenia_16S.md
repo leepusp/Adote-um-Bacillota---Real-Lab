@@ -1,135 +1,191 @@
+# Atividade prática — Filogenia de 16S rRNA
+
 ## Objetivo
 
-Olá pessoal, nós vamos montar uma árvore de 16S com o isolado que tivemos  posicionado dentro de um contexto mais amplo de diversidade bacteriana: o próprio gênero Bacillus e parentes próximos (via BLAST), mais dois grupos de referência adicionados manualmente (Clostridium e Escherichia coli/Gram-negativas) para servir de "régua" de comparação.
+Vamos construir uma árvore filogenética de 16S rRNA para posicionar o isolado ambiental em um contexto mais amplo de diversidade bacteriana: *Bacillus* e parentes próximos (via BLAST), além de grupos de comparação, como *Clostridium* e *Escherichia coli*/outras Gram-negativas.
 
->Resultado esperado: uma árvore com aproximadamente 700 sequências (500 do BLAST do isolado + 100 de Clostridium + 100 de E. coli + o nosso isolado ambiental).
+> **Resultado esperado:** uma árvore com aproximadamente 700 sequências (500 do BLAST do isolado + 100 de *Clostridium* + 100 de *E. coli* + o nosso isolado ambiental). O total poderá variar devido a resultados repetidos entre buscas.
 
 ## Passo 1 — Visualização de cromatogramas no Chromas e montagem do gene no GENEIOUS PRIME
 
-O 1° passo é abir o arquivo (Ab1) no chromas, onde visualizaremos o cromatograma inicial, e iremos interpreta-lo, e avaliando a qualidade do sequenciamento Sanger gerado. No próprio Chromas, temos a opção de copiar a sequência lida (porém ainda não montada), ela devera ser utilizada na identificação inicial via BLASTn.
+Primeiro, abram os arquivos de sequenciamento Sanger (`.ab1`) no **Chromas**. Visualizem os cromatogramas, avaliem a qualidade das bases e copiem uma sequência inicial para uma identificação preliminar por BLASTn.
 
-Após a identificação via BLASTn [Gustavo, você precisa falar como vamos buscar no blastn], utilizamos a 1° sequência de referência para montagem do gene. 
+Após encontrar uma sequência de referência de 16S rRNA, utilizem o **Geneious Prime**:
 
-1. Para isso migraremos para o Geneious, após copiar o .FASTA da sequência no programa, e nomear a referência, iremos utilizar a opção "Map to reference" no geneious, ao selecionar os dois cromatogramas, e mapear para a referência selecionada.
+1. Importem a sequência de referência em **FASTA** e os dois cromatogramas (**Forward/Reverse**).
+2. Selecionem os cromatogramas e utilizem **Map to Reference** para mapeá-los à referência.
+3. Inspecionem os cromatogramas manualmente e corrijam chamadas de nucleotídeos duvidosas quando houver evidência para isso.
+4. Gerem a sequência consenso das leituras e exportem-na em **formato FASTA**.
 
-2. Após isso, o próprio programa irá fazer o mapeamento da referência, e irá assinar "qual nucleotídeo foi lido", ainda assim, precisamos de uma inspeção manual para averiguar se as bases foram assinaladas corretamente, em alguns casos, podemos corrigir o resultado "na mão", mudando o nucleotído lido, a partir do cromatograma visualizado.
-
-3. Depois de montar as duas reads (Forward/Reverse) no Geneious e gerar o consenso, exportem a sequência consenso em formato FASTA. Essa é a nossa sequência de base que vocês vão usar no BLAST a seguir.
+O consenso é a sequência de base para a busca principal no BLASTn.
 
 ## Passo 2 — BLAST do consenso (top 500)
 
-1. Acessem o BLASTn do NCBI (https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome).
+1. Acessem o [BLASTn do NCBI](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome).
+2. Colem a sequência consenso do isolado.
+3. Em **Database**, selecionem **rRNA/ITS databases → 16S ribosomal RNA sequences (Bacteria and Archaea type strains)**. Esse banco favorece sequências de referência identificadas, reduzindo resultados como *uncultured bacterium*.
+4. Em **Program Selection**, selecionem **Somewhat similar sequences (blastn)**.
+5. Em **Algorithm parameters**, ajustem o número máximo de sequências retornadas para **500**.
+6. Executem o BLASTn e baixem os resultados em **formato FASTA**, preferencialmente a opção **Hit sequences**, mantendo os cabeçalhos com as descrições dos organismos. Se baixarem sequências alinhadas com gaps, eles serão removidos antes do MAFFT.
 
-2. Colem a sequência consenso do isolado de vocês.
-
-2. Na opção de DATABASE, selecionem "rRNA/ITS databases --> 16S ribosomal RNA sequences (Bacteria and Archaea type strains)" — isso é importante: evita trazer sequências de clones ambientais sem identificação ("uncultured bacterium")
-3. Atualizem o "Program selection" para blastn "somewhat similar sequences"
-4. Alterem o "+algorithm parameters", e mudem der 100 para 500 o número de respostas
-5. Rodem o BLAST.
-
-Baixem os 500 primeiros hits em formato FASTA (botão "Download" → "FASTA (aligned sequences)").
+**Entrada:** consenso em sequência de DNA. **Saída:** arquivo FASTA com os hits de 16S rRNA.
 
 ## Passo 3 — Adicionar sequências para comparação
 
-Como o BLAST retorna todos os hits (incluindo duplicatas e variações da mesma espécie), vamos adicionar uma 2° busca para selecionar microrganismos um pouco mais distantes, incluindo as bactérias do gênero Clostridium (também produzem endósporos), mas também um grupo de bactérias gram negativas
+Como o BLAST do isolado retorna principalmente organismos próximos, adicionaremos dois grupos de comparação mais distantes. Algumas sequências podem se repetir entre as buscas.
 
-1. No NCBI Nucleotide, busquem por uma sequência de referência de 16S de Clostridium botulinum.
-2. Rodem um novo BLASTn com essa sequência (mesmo banco: 16S type strains).
-3. Baixem os 100 primeiros hits em FASTA.
-4. Abram o alinhamento/dataset principal no AliView e usem Sequence → Add Sequences para importar esse FASTA novo pro dataset.
-5. Passo 5 — Adicionando grupo de comparação: E. coli (Gram-negativas)
-6. Repitam o mesmo processo com uma sequência de referência de 16S de Escherichia coli.
-7. Rodem o BLASTn (mesmo banco).
+**Grupo *Clostridium*:**
 
-==Atenção: é esperado que apareçam outras Gram-negativas próximas no resultado, como Shigella e Salmonella, isso é normal e faz parte da diversidade do grupo, não se preocupem.==
+1. No NCBI Nucleotide, procurem uma sequência de referência de 16S rRNA de *Clostridium botulinum*.
+2. Executem um novo BLASTn no mesmo banco de 16S de linhagens-tipo.
+3. Baixem os **100 primeiros hits em FASTA**.
+4. Abram o conjunto principal no **AliView** e utilizem **Sequence → Add Sequences** para importar esse FASTA.
 
-Baixem os 100 primeiros hits e adicionem ao dataset no AliView, do mesmo jeito do Passo 4.
+**Grupo *E. coli* e outras Gram-negativas:**
 
-Ao final deste passo, o dataset deve ter aproximadamente 700 sequências.
+1. Procurem uma sequência de referência de 16S rRNA de *Escherichia coli*.
+2. Repitam a busca no mesmo banco, baixando os **100 primeiros hits em FASTA**.
+3. Adicionem as sequências ao conjunto no AliView pelo mesmo procedimento.
 
-# Passo 4 — Alinhamento (MAFFT, servidor Haldane via LEEP)
+**Atenção:** podem aparecer outros gêneros relacionados, como *Shigella* e *Salmonella*. Isso faz parte da diversidade do grupo; não os excluam apenas pelo nome do gênero.
 
-Vamos usar o modo mais rápido do MAFFT (FFT-NS-1 — sem iteração), suficiente pra esse propósito didático.
-Temos que tomar o cuidado das 
+Incluam também o **consenso do isolado ambiental** e salvem o conjunto final como **`database.fasta`**. O conjunto deverá ter aproximadamente 700 sequências; verifiquem eventuais entradas duplicadas.
 
-## Conectem na Haldane via terminal nas máquinas da LEEP: (CHECAR)
+**Entrada:** arquivos FASTA dos três BLASTs e do isolado. **Saída:** `database.fasta` — FASTA com as sequências reunidas.
 
-bash
-ssh usuario@haldane 
+## Passo 4 — Preparação do FASTA e alinhamento com MAFFT
 
-Rodem o alinhamento:
+### 4.1. Acessar o servidor Haldane
 
-bash
-mafft --retree 1 --maxiterate 0 dataset_700.fasta > dataset_700_aligned.fasta ((CHECAR) CAMINHO GENÉRICO, TESTAR)
---retree 1: constrói a árvore-guia uma única vez (sem refazer)
---maxiterate 0: sem rodadas de refinamento iterativo
+No terminal da LEEP, conectem-se usando a conta fornecida para a atividade:
 
-Isso deve rodar em poucos minutos mesmo com ~700 sequências.
+```bash
+ssh -p 25022 user@haldane.icb.usp.br
+```
 
-## Passo 5 — Trimagem no AliView
-Abram o arquivo dataset_700_aligned.fasta no AliView.
-Inspecionem visualmente as pontas do alinhamento (regiões com muitos gaps/baixa qualidade nas extremidades).
-Salvem como um novo arquivo FASTA: dataset_700_trimmed.fasta.
+Substituam `user` por `aluno1`, `aluno2`, `aluno3` ou `aluno4`. Depois de conectar:
 
-# Passo 6 — Árvore (IQ-TREE2, servidor Haldane, modelo JC)
+```bash
+conda activate py310
+cd ~/database
+```
 
-bash
-iqtree2 -s dataset_700_trimmed.fasta -m JC -nt AUTO -pre arvore_700 ((CHECAR)CAMINHO GENÉRICO, TESTAR)
--m JC: modelo de Jukes-Cantor (o mais simples — todas as substituições com a mesma probabilidade). É uma simplificação proposital para priorizar velocidade e foco no fluxo de ferramentas; não é o modelo que se usaria numa análise filogenética "para publicação" (ali se usaria seleção de modelo com ModelFinder, geralmente GTR+G).
-O resultado final de interesse é o arquivo arvore_700.treefile.
+O arquivo `database.fasta`, montado no AliView, deverá estar nessa pasta do Haldane. Se ele estiver somente no computador da LEEP (e não em uma pasta compartilhada), enviem-no a partir do terminal da LEEP com `scp -P 25022 database.fasta user@haldane.icb.usp.br:~/database/`, substituindo `user` pelo login individual.
 
+### 4.2. Padronizar os identificadores GenBank
 
-# Passo 7 — Subindo no iTOL
+Os nomes das bactérias precisam estar nos cabeçalhos do FASTA **antes do IQ-TREE2**, para aparecerem nas pontas da árvore. O comando abaixo mantém os acessos GenBank, simplifica os nomes e remove gaps importados de alinhamentos anteriores.
 
-Acessem o iTOL e façam upload do arquivo .treefile.
-A partir dessa etapa, começa a parte de interpretação que vocês irão fazer, como vocês vão "marcar" cada árvore e cada ramo
-Como vocês terão 4 árvores iguais, a idéia é que nessa etapa vocês formem uma dupla, que irá analizar a mesma árvore, porém um de vocês será responsável por buscar informações a respeito daquele grupo de bactérias sendo analisadas)
+```bash
+awk '
+/^>/ {
+    id = $1
+    sub(/^>/, "", id)
+    gsub(/[^A-Za-z0-9._-]/, "_", id)
+    nome = $0
+    sub(/^>[^[:space:]]+[[:space:]]*/, "", nome)
+    sub(/[[:space:]]+16S[[:space:]]+(ribosomal[[:space:]]+RNA|rRNA).*$/, "", nome)
+    gsub(/[^A-Za-z0-9._-]+/, "_", nome)
+    gsub(/_+/, "_", nome)
+    sub(/^_+/, "", nome)
+    sub(/_+$/, "", nome)
+    label = (nome == "") ? id : nome "__" id
+    copia[label]++
+    if (copia[label] > 1) label = label "__copy" copia[label]
+    print ">" label
+    next
+}
+{
+    gsub(/[-.]/, "")
+    gsub(/[[:space:]]/, "")
+    if (length($0)) print
+}
+' database.fasta > bacillus_clostridium_ecoli.fasta
+```
 
-1 - Pintar ramo (Selecionar Branches --> Whole Clade --> Selecionar cor) por patogenicidade (bactéria reconhecidamente causa doença em humana --> pintar de vermelho ou outra cor que preferirem; Não causa doença em humana e/ou desconhecido, vocês pintam de azul, por exemplo.)
-2 - Colorir ramo por hospedeiro provável (bactéria comensal humana x bactéria ambiental)
+**Entrada:** `database.fasta` — FASTA com acesso GenBank seguido da descrição do organismo. **Saída:** `bacillus_clostridium_ecoli.fasta` — FASTA sem gaps e com nomes padronizados.
 
-Como são muitos ramos, a ideia é que vocês olhem os "grupos" ou também chamados de subclados dentro da árvore, ao invés de analisarem uma a uma, não é o objetivo da atividade.
+Exemplo de identificador esperado: `Clostridium_sporogenes_strain_JCM_1416__NR_113245.1`.
+
+**Observação:** se um arquivo do BLAST contiver apenas IDs e não as descrições dos organismos, será necessário obter os nomes nos registros do NCBI antes dessa etapa. Cabeçalhos repetidos recebem o sufixo `__copy2`, mas isso não remove sequências duplicadas.
+
+Confiram as contagens (elas devem ser iguais):
+
+```bash
+grep -c '^>' database.fasta
+grep -c '^>' bacillus_clostridium_ecoli.fasta
+```
+
+### 4.3. MAFFT — alinhamento múltiplo
+
+```bash
+mafft --nuc --auto --thread 2 bacillus_clostridium_ecoli.fasta > mafft.fasta
+```
+
+**Entrada:** `bacillus_clostridium_ecoli.fasta` — FASTA de DNA não alinhado. **Saída:** `mafft.fasta` — FASTA de DNA alinhado.
+
+O **MAFFT** identifica posições correspondentes entre as sequências, inserindo gaps. `--auto` escolhe uma estratégia e `--thread 2` utiliza duas threads.
+
+## Passo 5 — Inspeção do alinhamento no AliView
+
+Abram **`mafft.fasta`** no AliView disponível nos computadores da LEEP. Observem regiões conservadas, gaps e possíveis problemas no alinhamento. Se fizerem uma filtragem manual, salvem uma cópia como **`manual.fasta`**, preservando `mafft.fasta`. O arquivo final deve continuar sendo um **FASTA alinhado**, com as mesmas sequências e o mesmo comprimento de alinhamento para todas elas.
+
+### trimAl — filtragem automática (opcional)
+
+Como alternativa à edição no AliView, podem executar:
+
+```bash
+trimal -in mafft.fasta -out trimal.fasta -automated1
+```
+
+**Entrada:** `mafft.fasta` — FASTA alinhado. **Saída:** `trimal.fasta` — FASTA alinhado com colunas filtradas.
+
+O **trimAl** remove automaticamente posições do alinhamento segundo critérios de qualidade. Esta etapa é opcional.
+
+## Passo 6 — Construção da árvore com IQ-TREE2
+
+Neste exemplo, usaremos o modelo evolutivo **GTR** e o alinhamento filtrado pelo trimAl:
+
+```bash
+MODELO=GTR
+mkdir -p "iqtree/$MODELO"
+iqtree2 -s trimal.fasta -st DNA -m "$MODELO" --fast -T AUTO --threads-max 8 -mem 6G -pre "iqtree/$MODELO/arvore"
+```
+
+**Entrada:** `trimal.fasta` — FASTA com alinhamento múltiplo de DNA. **Saída principal:** `iqtree/GTR/arvore.treefile` — árvore filogenética em **formato Newick**.
+
+O **IQ-TREE2** infere uma árvore por máxima verossimilhança. `-m GTR` define o modelo evolutivo; `--fast` acelera a busca; `-T AUTO --threads-max 8` ajusta o paralelismo até oito threads; `-pre` define o local dos resultados.
+
+**Se não utilizarem o trimAl**, substituam `-s trimal.fasta` por **`-s manual.fasta`** (edição no AliView) ou **`-s mafft.fasta`** (sem filtragem). Para repetir a análise com outro arquivo de entrada, escolham outra pasta de saída para não sobrescrever os resultados. Mantenham a sessão SSH conectada até o fim da execução.
+
+**Importante:** esta busca rápida não calcula suportes UFBoot nem SH-aLRT. Por isso, a árvore é destinada à exploração didática; a análise filogenética com suporte estatístico requer uma execução adicional.
+
+## Passo 7 — Visualização e interpretação no iTOL
+
+Após terminar o IQ-TREE2, localizem **`iqtree/GTR/arvore.treefile`**. Abram esse arquivo, em **formato Newick**, no [iTOL](https://itol.embl.de/).
+
+- **`.treefile` (Newick):** árvore para visualização, com nomes das bactérias e comprimentos dos ramos.
+- **`.iqtree`:** relatório da inferência filogenética.
+
+No iTOL, localizem os principais clados, selecionem **Branches → Whole clade** e escolham cores para representar características biológicas. Como são muitas sequências, concentrem-se nos grupos e subclados, em vez de pintar individualmente todas as pontas.
+
+Como atividade de interpretação, comparem os agrupamentos por patogenicidade e por hospedeiro/ambiente. Organizem-se em duplas para investigar a mesma árvore e discutir diferenças de anotação e interpretação dos clados.
+
+---
 
 ## Passo 8 Agora que vocês aprenderam como montar um árvore inicial, vamos olhar para um exemplo de uma pesquisa já públicada e vamos ver o padrão de algumas das sequências nossas!
 
-1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais, 
+1. Vamos abrir a tabela fornecida pelos autores do artigo [Conservation and Evolution of the Sporulation Gene Set in Diverse Members of the Firmicutes](https://pmc.ncbi.nlm.nih.gov/articles/PMC9210971/) disponível na pasta de materiais,
 2. Essa tabela é grande, para motivos desta disciplina, nós vamos focar nos 112 genes caracterizados como core para as próximas questões, a tabela reduzida também na parte de materiais
-   
-   
+
+
 ### Encontrando anotações
 
 Infelizmente, não podemos integrar o nosso bacilo ambiental pois não possuímos o genoma dele, aqui cada um de vocês irá escolher uma espécie do resultado do BLAST para tentarmos encontrar os equivalentes desses 112 genes.
 
 #### Precisamos de um genoma
 
-É necessário termos um genoma para ver se algum dos genomas que nós podemos recuperar através do blast possui esse cog
-Vamos primeiro selecionar o genoma
-
-Da saída do BLAST que conseguimos anteriormente, vamos ver quais sequências podem servir para esse objetivo. Estamos em 4. Vamos dividir um genoma para cada
-
-Os top 4 resultados no BLAST feito para elaborar a aula são:
-
-- Bacillus wiedmannii strain FSL W8-0169 
-- Bacillus proteolyticus strain MCCC 1A00365
-- Bacillus toyonensis strain BCT-7112
-- Bacillus sanguinis strain BML-BC004
-
-Vamos tentar encontrar um genoma para essas espécies e strain!
-
-##### Encontrando um genoma
-
-1. Acesse o site da base de dados do ncbi [Databses](https://www.ncbi.nlm.nih.gov/datasets/genome/)
-2. Digite primeiro o nome da espécie desejada no campo de busca
-3. Filtre pelas palavras chaves após "strain" (exemplo: FSL W8-0169)
-   1. Se não existir o genoma da strain, vamos pegar o genoma da espécie!
-4. Clique no link para o assembly, role a página que você encontrou abaixo até a região de "Chromossomes"
-   1. Aqui, se existir apenas um ou dois, copie o identificador do cromossomo, caso existam mais, recomendamos que você aperte o botão de Download e salve a tabela
-
-##### Encontrando o nosso gene
-
-Entremos novamente no BLAST, mas desta vez, iremos selecionar tblastn
-
-
+É necessário term
 
 
 ## "" MALU PREENCHER AQUI PASSO A PASSO DAS ATIVIDADES "" ##
